@@ -160,10 +160,10 @@ body:has(#confirmScreen.active) .topbar{display:none!important}
     <div class="scan-controls">
       <button class="btn btn-blue" id="cameraBtn">Buka Kamera</button>
       <p class="small" id="cameraStatus">Menyiapkan kamera untuk memindai QR/barcode...</p>
-      <label for="codeInput">Atau masukkan kode demo</label>
+      <label for="codeInput">Siapkan Surat Undangan</label>
       <input class="field" id="codeInput" placeholder="Contoh: JATISARI2026" autocomplete="off">
       <button class="btn btn-red" id="enterBtn">Mulai Simulasi</button>
-      <p class="small">Untuk prototipe, kode demo apa pun yang tidak kosong dapat digunakan.</p>
+      <p class="small">Ini hanya demonstrasi antarmuka. Tidak ada suara resmi yang dikirim atau disimpan di server. Untuk penggunaan nyata diperlukan backend, keamanan, autentikasi pemilih, serta pengujian sistem.</p>
     </div>
   </div>
 </section>
@@ -171,7 +171,7 @@ body:has(#confirmScreen.active) .topbar{display:none!important}
 <section class="screen" id="voteScreen">
   <div class="center">
     <img class="crest" id="largeCrest" alt="Logo Desa Jatisari" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Cpath d='M50 4 L84 13 L91 31 L82 83 L50 114 L18 83 L9 31 L16 13Z' fill='%230c3f8a' stroke='%23f2c500' stroke-width='5'/%3E%3Cpath d='M50 23 L50 78' stroke='%23f2c500' stroke-width='3'/%3E%3Ctext x='50' y='94' fill='%23fff' font-size='10' text-anchor='middle' font-weight='bold'%3EJATISARI%3C/text%3E%3C/svg%3E">
-    <h1 class="main-title">SIMULASI<br>PEMILIHAN DESA SERENTAK<br>SECARA DIGITAL<br>DESA JATISARI<br>TANJUNGSARI-SUMEDANG</h1>
+    <h1 class="main-title">SIMULASI<br>PEMILIHAN KEPALA DESA SERENTAK<br>SECARA DIGITAL<br>DESA JATISARI<br>TANJUNGSARI-SUMEDANG</h1>
   </div>
   <div class="candidates" id="candidateGrid"></div>
   <button class="btn btn-red btn-wide" id="chooseBtn" disabled>Pilih Kandidat Ini</button>
@@ -192,7 +192,7 @@ body:has(#confirmScreen.active) .topbar{display:none!important}
   <div class="success-modal">
     <div class="success-icon">✓</div>
     <div class="success-title">Terima Kasih</div>
-    <p class="success-copy">Simulasi berhasil diselesaikan.</p>
+    <p class="success-copy">Suara berhasil dikirim dan disimpan.</p>
     <p class="success-copy">Kembali ke pemindaian dalam <strong id="successCountdown">5</strong> detik.</p>
     <p class="small">Ini hanya simulasi. Data tidak dikirim ke server.</p>
     <button class="btn btn-blue" id="restartBtn" style="margin-top:25px">Kembali ke Awal</button>
@@ -200,7 +200,7 @@ body:has(#confirmScreen.active) .topbar{display:none!important}
 </section>
 <div class="notice"><strong>Catatan prototipe:</strong> Ini hanya demonstrasi antarmuka. Tidak ada suara resmi yang dikirim atau disimpan di server. Untuk penggunaan nyata diperlukan backend, keamanan, autentikasi pemilih, serta pengujian sistem.</div>
 </main>
-<footer>SIMULASI PEMILIHAN DESA SERENTAK SECARA DIGITAL · DESA JATISARI, TANJUNGSARI–SUMEDANG</footer>
+<footer>SIMULASI PEMILIHAN KEPALA DESA SERENTAK SECARA DIGITAL · DESA JATISARI, TANJUNGSARI–SUMEDANG</footer>
 </div>
 <script>
 const candidates = [
