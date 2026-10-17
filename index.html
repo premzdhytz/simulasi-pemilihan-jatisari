@@ -132,18 +132,774 @@ body:has(#confirmScreen.active) .topbar{display:none!important}
 @media(max-height:500px){.topbar{padding:2px 8px}.brand img{width:22px;height:25px}#voteScreen .crest{display:none}#voteScreen .main-title{font-size:clamp(12px,3vh,20px);margin-bottom:3px}.notice,footer{display:none}}
 
 
-/* LANDSCAPE LOCK for pages 2–3: fixed candidate photo proportions, independent of device size. */
-#voteScreen .candidates{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:8px!important;align-items:start!important}
+/* Responsif halaman 2–3: rasio foto konsisten, ukuran kartu menyesuaikan layar. */
+#voteScreen .candidates{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:clamp(4px,1vw,10px)!important;align-items:start!important}
 #voteScreen .candidate{display:flex!important;flex-direction:column!important;min-width:0!important;height:auto!important}
 #voteScreen .candidate .photo{width:100%!important;height:auto!important;aspect-ratio:4/5!important;flex:none!important;min-height:0!important}
 #voteScreen .candidate .photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
-#voteScreen .candidate-name{flex:none!important;min-height:42px;white-space:normal!important;font-size:clamp(12px,1.5vw,20px)!important}
-#confirmScreen .confirm-card{width:250px!important;max-width:250px!important;max-height:none!important;height:auto!important;min-height:0!important;flex:none!important;display:flex;flex-direction:column;margin:0 auto 10px!important}
+#voteScreen .candidate-name{flex:none!important;min-height:clamp(30px,5vh,44px);white-space:normal!important;font-size:clamp(11px,1.5vw,20px)!important;padding:5px 2px!important}
+#confirmScreen .confirm-card{width:min(250px,42vw)!important;max-width:250px!important;max-height:none!important;height:auto!important;min-height:0!important;flex:none!important;display:flex;flex-direction:column;margin:0 auto 10px!important}
 #confirmScreen .confirm-card .photo{width:100%!important;height:auto!important;aspect-ratio:4/5!important;flex:none!important;min-height:0!important}
 #confirmScreen .confirm-card .photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
-#confirmScreen .confirm-card .candidate-name{flex:none!important;min-height:48px}
-@media (orientation:portrait){
- body:has(#voteScreen.active)::after,body:has(#confirmScreen.active)::after{content:"PUTAR PERANGKAT KE POSISI LANDSCAPE\A\A Simulasi ini dirancang untuk tampilan horizontal.";white-space:pre-wrap;position:fixed;inset:0;z-index:9999;background:#0b2444;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:28px;font-size:clamp(20px,5vw,32px);font-weight:700;line-height:1.5}
+#confirmScreen .confirm-card .candidate-name{flex:none!important;min-height:clamp(38px,6vh,48px)}
+/* HP portrait: dua kolom agar foto dan nama tetap terbaca; halaman kandidat boleh digulir. */
+@media (max-width:700px) and (orientation:portrait){
+ main{overflow-y:auto!important;overflow-x:hidden!important}
+ #voteScreen{height:auto!important;min-height:100%;overflow:visible!important;display:none}
+ #voteScreen.active{display:block!important}
+ #voteScreen .crest{width:clamp(48px,14vw,76px);height:clamp(56px,16vw,91px);margin:0 auto 6px}
+ #voteScreen .main-title{font-size:clamp(14px,4vw,22px)!important;line-height:1.12;margin:0 auto 12px!important}
+ #voteScreen .candidates{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin:0 auto 12px!important}
+ #voteScreen .candidate .photo{aspect-ratio:4/5!important}
+ #voteScreen .candidate-name{font-size:clamp(12px,3.5vw,17px)!important;min-height:34px}
+ #chooseBtn{font-size:16px;min-height:44px}
+ #voteScreen>.small{margin:6px 0 12px!important}
+ #confirmScreen.active{display:flex!important;flex-direction:column;justify-content:flex-start!important;overflow-y:auto!important;padding:4px 0 12px}
+ #confirmScreen h2{font-size:clamp(22px,6vw,30px);margin-bottom:5px}
+ #confirmScreen .subtitle{font-size:clamp(14px,3.8vw,18px);margin-bottom:10px}
+ #confirmScreen .confirm-card{width:min(58vw,230px)!important;max-width:230px!important;margin:0 auto 12px!important}
+ #confirmScreen .confirm-card .photo{aspect-ratio:4/5!important}
+ #confirmScreen .actions{gap:10px;width:100%;margin-top:auto}
+ #confirmScreen .actions .btn{width:50%;min-height:46px;padding:10px 12px;font-size:16px}
+}
+/* HP landscape: lima kandidat tetap sejajar dengan foto yang mengecil proporsional. */
+@media (max-width:900px) and (orientation:landscape){
+ #voteScreen .candidates{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:5px!important}
+ #voteScreen .crest{width:clamp(35px,6vh,58px);height:clamp(38px,7vh,64px);margin-bottom:2px}
+ #voteScreen .main-title{font-size:clamp(12px,2.7vh,20px)!important;line-height:1.05;margin-bottom:5px!important}
+ #voteScreen .candidate-name{font-size:clamp(10px,1.7vw,14px)!important;min-height:28px}
+ #confirmScreen .confirm-card{width:min(30vw,180px)!important}
+ #confirmScreen .confirm-card .photo{aspect-ratio:4/5!important}
+ #confirmScreen .actions .btn{min-height:42px;padding:8px 12px;font-size:16px}
+}
+
+
+/* Tampilan HP: gunakan ukuran responsif, bukan memaksa zoom browser.
+   Mode landscape dipadatkan agar halaman 2 dan 3 tidak saling bertumpuk;
+   mode portrait tetap dapat digulir agar foto kandidat tidak terlalu kecil. */
+@media (max-width:700px) and (orientation:landscape){
+ html,body{overflow:hidden!important}
+ .app{height:100dvh!important;min-height:0!important;overflow:hidden!important}
+ main{padding:2px 5px!important;overflow:hidden!important}
+ #voteScreen.active{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;gap:0!important}
+ #voteScreen .crest{width:clamp(24px,5vh,42px)!important;height:clamp(26px,5.5vh,46px)!important;margin:0 auto 1px!important}
+ #voteScreen .main-title{font-size:clamp(10px,2.1vh,16px)!important;line-height:1.02!important;margin:0 auto 3px!important}
+ #voteScreen .candidates{flex:0 1 auto!important;width:100%!important;max-height:calc(100dvh - 105px)!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:3px!important;margin:0 auto 3px!important}
+ #voteScreen .candidate .photo{aspect-ratio:4/5!important;max-height:calc((100dvh - 130px)*.68)!important}
+ #voteScreen .candidate-name{font-size:clamp(9px,1.7vw,12px)!important;line-height:1.05!important;min-height:22px!important;padding:3px 1px!important;overflow-wrap:anywhere!important}
+ #chooseBtn{min-height:30px!important;padding:5px 8px!important;font-size:clamp(11px,2vw,15px)!important;line-height:1.1!important}
+ #voteScreen>.small{font-size:9px!important;margin:2px 0 0!important;line-height:1.1!important}
+ #confirmScreen.active{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;gap:2px!important;overflow:hidden!important;padding:2px 0!important}
+ #confirmScreen h2{font-size:clamp(15px,3.3vh,22px)!important;line-height:1.05!important;margin:0 0 2px!important}
+ #confirmScreen .subtitle{font-size:clamp(10px,2.2vh,14px)!important;line-height:1.1!important;margin:0 0 3px!important}
+ #confirmScreen .confirm-card{width:min(24vw,calc(100dvh - 105px),135px)!important;max-width:none!important;max-height:calc(100dvh - 105px)!important;margin:0 auto 4px!important}
+ #confirmScreen .confirm-card .photo{aspect-ratio:4/5!important}
+ #confirmScreen .confirm-card .candidate-name{font-size:clamp(12px,2.6vh,18px)!important;min-height:24px!important;padding:3px!important}
+ #confirmScreen .actions{gap:8px!important;margin:0 auto!important}
+ #confirmScreen .actions .btn{width:50%!important;min-height:32px!important;padding:5px 8px!important;font-size:clamp(11px,2vw,15px)!important;line-height:1.1!important}
+}
+@media (max-width:700px) and (orientation:portrait){
+ /* Portrait: keep cards readable and let the candidate list scroll naturally. */
+ html,body{overflow:hidden!important}
+ .app{height:100dvh!important;overflow:hidden!important}
+ main{min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding:5px 8px!important}
+ #voteScreen.active{display:block!important;height:auto!important;min-height:100%!important;overflow:visible!important}
+ #voteScreen .candidates{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;margin-bottom:8px!important}
+ #voteScreen .candidate .photo{aspect-ratio:4/5!important;max-height:none!important}
+ #voteScreen .candidate-name{font-size:clamp(12px,3.5vw,16px)!important;min-height:30px!important;line-height:1.1!important}
+ #chooseBtn{min-height:42px!important;font-size:15px!important;padding:9px 12px!important}
+ #confirmScreen.active{display:flex!important;height:auto!important;min-height:100%!important;overflow:visible!important;justify-content:flex-start!important;padding:3px 0 10px!important}
+ #confirmScreen h2{font-size:clamp(21px,6vw,28px)!important;line-height:1.1!important;margin-bottom:4px!important}
+ #confirmScreen .subtitle{font-size:clamp(13px,3.8vw,17px)!important;line-height:1.2!important;margin-bottom:7px!important}
+ #confirmScreen .confirm-card{width:min(52vw,220px)!important;max-height:none!important;margin:0 auto 9px!important}
+ #confirmScreen .confirm-card .photo{aspect-ratio:4/5!important}
+ #confirmScreen .actions{gap:8px!important;margin-top:0!important}
+ #confirmScreen .actions .btn{min-height:44px!important;padding:9px 8px!important;font-size:14px!important}
+}
+
+
+
+/* FINAL RESPONSIVE PASS: laptop, tablet, and phone.
+   These rules intentionally come last so they override earlier device-specific tweaks. */
+#voteScreen.active,
+#confirmScreen.active {
+  min-width: 0;
+  box-sizing: border-box;
+}
+#voteScreen .candidates {
+  width: 100% !important;
+  max-width: 1280px !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  align-items: start !important;
+  gap: clamp(4px, 1vw, 12px) !important;
+}
+#voteScreen .candidate {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+#voteScreen .candidate .photo {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5 !important;
+  max-height: 38vh !important;
+}
+#voteScreen .candidate .photo img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+#voteScreen .candidate-name {
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  line-height: 1.15 !important;
+  min-height: 34px !important;
+  font-size: clamp(11px, 1.35vw, 20px) !important;
+  padding: 6px 3px !important;
+}
+#voteScreen .main-title {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+#confirmScreen.active {
+  gap: 0;
+}
+#confirmScreen .confirm-card {
+  width: min(280px, 36vw, 34vh) !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  flex: 0 1 auto !important;
+  margin: 4px auto 12px !important;
+}
+#confirmScreen .confirm-card .photo {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5 !important;
+  max-height: 42vh !important;
+  flex: none !important;
+}
+#confirmScreen .confirm-card .photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#confirmScreen .actions {
+  width: min(100%, 900px) !important;
+  gap: clamp(8px, 2vw, 24px) !important;
+}
+#confirmScreen .actions .btn {
+  min-width: 0 !important;
+  width: 50% !important;
+  padding: clamp(8px, 1.2vh, 15px) clamp(8px, 1.5vw, 24px) !important;
+  font-size: clamp(14px, 1.8vw, 24px) !important;
+}
+
+/* Laptop and desktop: five candidates in one balanced row. */
+@media (min-width: 1101px) {
+  #voteScreen.active {
+    justify-content: center !important;
+    gap: 0;
+  }
+  #voteScreen .crest {
+    width: clamp(46px, 7vh, 78px) !important;
+    height: clamp(48px, 8vh, 82px) !important;
+    margin-bottom: 4px !important;
+  }
+  #voteScreen .main-title {
+    font-size: clamp(19px, 2.7vh, 32px) !important;
+    margin-bottom: clamp(6px, 1.2vh, 14px) !important;
+  }
+  #voteScreen .candidates {
+    flex: 0 1 auto !important;
+    margin-bottom: 8px !important;
+  }
+  #voteScreen .candidate .photo {
+    max-height: 35vh !important;
+  }
+}
+
+/* Tablet landscape and smaller laptops: keep all five cards in one row,
+   with smaller photos and names to prevent collisions. */
+@media (min-width: 701px) and (max-width: 1100px) and (orientation: landscape) {
+  main { padding: 6px 10px !important; }
+  #voteScreen.active { justify-content: center !important; }
+  #voteScreen .crest {
+    width: clamp(32px, 5.5vh, 58px) !important;
+    height: clamp(34px, 6vh, 62px) !important;
+    margin-bottom: 2px !important;
+  }
+  #voteScreen .main-title {
+    font-size: clamp(15px, 2.7vh, 25px) !important;
+    line-height: 1.08 !important;
+    margin-bottom: 5px !important;
+  }
+  #voteScreen .candidates {
+    gap: 5px !important;
+    margin-bottom: 5px !important;
+  }
+  #voteScreen .candidate .photo { max-height: 34vh !important; }
+  #voteScreen .candidate-name {
+    font-size: clamp(10px, 1.35vw, 15px) !important;
+    min-height: 28px !important;
+    padding: 4px 2px !important;
+  }
+  #chooseBtn { min-height: 40px !important; padding: 7px 12px !important; }
+  #confirmScreen .confirm-card { width: min(220px, 28vw, 34vh) !important; }
+  #confirmScreen .confirm-card .photo { max-height: 36vh !important; }
+}
+
+/* Tablet portrait: allow scrolling and use three columns, so cards stay readable. */
+@media (min-width: 701px) and (max-width: 1100px) and (orientation: portrait) {
+  html, body { overflow: hidden !important; }
+  main {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 12px 16px !important;
+  }
+  #voteScreen.active {
+    display: block !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+  }
+  #voteScreen .crest {
+    width: clamp(58px, 9vw, 88px) !important;
+    height: clamp(65px, 10vw, 100px) !important;
+    margin-bottom: 8px !important;
+  }
+  #voteScreen .main-title {
+    font-size: clamp(20px, 3vw, 30px) !important;
+    line-height: 1.12 !important;
+    margin-bottom: 14px !important;
+  }
+  #voteScreen .candidates {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin-bottom: 14px !important;
+  }
+  #voteScreen .candidate .photo { max-height: none !important; }
+  #voteScreen .candidate-name {
+    font-size: clamp(13px, 1.8vw, 18px) !important;
+    min-height: 36px !important;
+  }
+  #confirmScreen.active {
+    display: flex !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+    justify-content: flex-start !important;
+    padding: 8px 0 16px !important;
+  }
+  #confirmScreen .confirm-card { width: min(300px, 44vw) !important; }
+  #confirmScreen .confirm-card .photo { max-height: none !important; }
+  #confirmScreen .actions { margin-top: 8px !important; }
+}
+
+/* Phone landscape: five compact candidates across, with compact confirmation layout. */
+@media (max-width: 700px) and (orientation: landscape) {
+  main { padding: 3px 6px !important; overflow: hidden !important; }
+  #voteScreen.active {
+    display: flex !important;
+    height: 100% !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    overflow: hidden !important;
+  }
+  #voteScreen .crest {
+    width: clamp(22px, 4.5vh, 38px) !important;
+    height: clamp(24px, 5vh, 42px) !important;
+    margin: 0 auto 1px !important;
+  }
+  #voteScreen .main-title {
+    font-size: clamp(10px, 2.2vh, 16px) !important;
+    line-height: 1.05 !important;
+    margin: 0 auto 3px !important;
+  }
+  #voteScreen .candidates {
+    flex: 0 1 auto !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 3px !important;
+    margin: 0 auto 3px !important;
+  }
+  #voteScreen .candidate .photo { max-height: 38vh !important; }
+  #voteScreen .candidate-name {
+    font-size: clamp(9px, 1.7vw, 12px) !important;
+    min-height: 22px !important;
+    padding: 3px 1px !important;
+  }
+  #chooseBtn { min-height: 30px !important; padding: 5px 8px !important; font-size: 12px !important; }
+  #voteScreen > .small { font-size: 9px !important; margin: 2px 0 0 !important; }
+  #confirmScreen.active {
+    display: flex !important;
+    height: 100% !important;
+    justify-content: flex-start !important;
+    overflow: hidden !important;
+    padding: 2px 0 !important;
+  }
+  #confirmScreen h2 { font-size: clamp(15px, 3.3vh, 22px) !important; line-height: 1.05 !important; margin-bottom: 2px !important; }
+  #confirmScreen .subtitle { font-size: clamp(10px, 2.2vh, 14px) !important; line-height: 1.1 !important; margin-bottom: 3px !important; }
+  #confirmScreen .confirm-card { width: min(24vw, 32vh, 135px) !important; margin: 0 auto 4px !important; }
+  #confirmScreen .confirm-card .photo { max-height: 40vh !important; }
+  #confirmScreen .confirm-card .candidate-name { min-height: 24px !important; font-size: 14px !important; padding: 3px !important; }
+  #confirmScreen .actions { gap: 8px !important; margin: 0 auto !important; }
+  #confirmScreen .actions .btn { min-height: 32px !important; padding: 5px 8px !important; font-size: 12px !important; }
+}
+
+/* Phone portrait: two columns and natural vertical scrolling. */
+@media (max-width: 700px) and (orientation: portrait) {
+  html, body { overflow: hidden !important; }
+  .app { height: 100dvh !important; overflow: hidden !important; }
+  main { min-height: 0 !important; overflow-y: auto !important; overflow-x: hidden !important; padding: 8px !important; }
+  #voteScreen.active {
+    display: block !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+  }
+  #voteScreen .crest {
+    width: clamp(48px, 14vw, 76px) !important;
+    height: clamp(54px, 16vw, 88px) !important;
+    margin: 0 auto 6px !important;
+  }
+  #voteScreen .main-title {
+    font-size: clamp(14px, 4vw, 22px) !important;
+    line-height: 1.12 !important;
+    margin: 0 auto 12px !important;
+  }
+  #voteScreen .candidates {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    margin: 0 auto 12px !important;
+  }
+  #voteScreen .candidate .photo { max-height: none !important; }
+  #voteScreen .candidate-name {
+    font-size: clamp(12px, 3.5vw, 16px) !important;
+    min-height: 32px !important;
+    padding: 5px 3px !important;
+  }
+  #chooseBtn { min-height: 42px !important; font-size: 15px !important; padding: 9px 12px !important; }
+  #voteScreen > .small { font-size: 11px !important; margin: 6px 0 12px !important; }
+  #confirmScreen.active {
+    display: flex !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+    justify-content: flex-start !important;
+    padding: 5px 0 12px !important;
+  }
+  #confirmScreen h2 { font-size: clamp(21px, 6vw, 28px) !important; line-height: 1.1 !important; margin-bottom: 4px !important; }
+  #confirmScreen .subtitle { font-size: clamp(13px, 3.8vw, 17px) !important; line-height: 1.2 !important; margin-bottom: 7px !important; }
+  #confirmScreen .confirm-card { width: min(52vw, 220px) !important; margin: 0 auto 9px !important; }
+  #confirmScreen .confirm-card .photo { max-height: none !important; }
+  #confirmScreen .actions { gap: 8px !important; margin: 0 auto !important; }
+  #confirmScreen .actions .btn { min-height: 44px !important; padding: 9px 8px !important; font-size: 14px !important; }
+}
+
+/* Short screens: trim decorative spacing before anything can overlap. */
+@media (max-height: 520px) {
+  #voteScreen .crest { margin-bottom: 1px !important; }
+  #voteScreen .main-title { margin-bottom: 4px !important; }
+  #voteScreen .candidate-name { min-height: 24px !important; }
+  #confirmScreen .confirm-card { margin-bottom: 5px !important; }
+  #confirmScreen .actions .btn { min-height: 36px !important; }
+}
+
+
+/* HOTFIX based on phone screenshot: prevent the selection button from overlapping cards.
+   Use touch capability as well as viewport width because some mobile browsers report
+   a wide CSS viewport in landscape mode. */
+#voteScreen #chooseBtn {
+  position: relative !important;
+  inset: auto !important;
+  transform: none !important;
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 8px auto 0 !important;
+  z-index: 5 !important;
+}
+#voteScreen .candidates {
+  position: relative !important;
+  flex: 0 0 auto !important;
+  height: auto !important;
+  max-height: none !important;
+  margin-bottom: 8px !important;
+}
+#voteScreen .candidate {
+  position: relative !important;
+  align-self: start !important;
+}
+#voteScreen .candidate .photo {
+  flex: none !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5 !important;
+  min-height: 0 !important;
+}
+#voteScreen .candidate .photo img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+#voteScreen .candidate-name {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  line-height: 1.15 !important;
+}
+@media (pointer: coarse) and (orientation: landscape) {
+  main { overflow-y: auto !important; overflow-x: hidden !important; }
+  #voteScreen.active {
+    display: block !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+  }
+  #voteScreen .crest {
+    width: clamp(28px, 6vh, 58px) !important;
+    height: clamp(30px, 6.5vh, 64px) !important;
+    margin: 0 auto 3px !important;
+  }
+  #voteScreen .main-title {
+    font-size: clamp(13px, 2.7vh, 25px) !important;
+    line-height: 1.08 !important;
+    margin: 0 auto 8px !important;
+  }
+  #voteScreen .candidates {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: clamp(3px, .6vw, 8px) !important;
+    width: 100% !important;
+    margin: 0 auto 8px !important;
+  }
+  #voteScreen .candidate .photo {
+    width: 100% !important;
+    max-height: none !important;
+    aspect-ratio: 4 / 5 !important;
+  }
+  #voteScreen .candidate-name {
+    min-height: 28px !important;
+    padding: 4px 2px !important;
+    font-size: clamp(10px, 1.5vw, 16px) !important;
+  }
+  #voteScreen #chooseBtn { margin-top: 8px !important; min-height: 38px !important; }
+  #voteScreen > .small { margin: 5px 0 10px !important; }
+  #confirmScreen.active {
+    display: flex !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+    justify-content: flex-start !important;
+    padding-bottom: 12px !important;
+  }
+  #confirmScreen .confirm-card { width: min(28vw, 180px) !important; }
+  #confirmScreen .actions .btn { min-height: 40px !important; padding: 8px 12px !important; }
+}
+
+
+
+/* PHONE LANDSCAPE ONLY: smaller candidate photos to free vertical space.
+   Laptop CSS is untouched; this is limited to touch devices with a short landscape viewport. */
+@media (pointer: coarse) and (orientation: landscape) and (max-height: 500px) {
+  #voteScreen .crest {
+    width: clamp(22px, 4vh, 36px) !important;
+    height: clamp(22px, 4.5vh, 40px) !important;
+    margin: 0 auto 2px !important;
+  }
+  #voteScreen .main-title {
+    font-size: clamp(11px, 2.1vh, 16px) !important;
+    line-height: 1.04 !important;
+    margin: 0 auto 4px !important;
+  }
+  #voteScreen .candidates {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 3px !important;
+    margin: 0 auto 5px !important;
+  }
+  #voteScreen .candidate .photo {
+    height: clamp(76px, 23vh, 118px) !important;
+    max-height: 118px !important;
+    aspect-ratio: auto !important;
+    flex: 0 0 auto !important;
+  }
+  #voteScreen .candidate-name {
+    min-height: 23px !important;
+    padding: 3px 1px !important;
+    font-size: clamp(9px, 1.5vw, 12px) !important;
+    line-height: 1.05 !important;
+  }
+  #voteScreen #chooseBtn {
+    min-height: 32px !important;
+    padding: 5px 8px !important;
+    margin-top: 4px !important;
+    font-size: clamp(11px, 1.8vw, 14px) !important;
+  }
+  #voteScreen > .small {
+    font-size: 10px !important;
+    margin: 3px 0 6px !important;
+  }
+  #confirmScreen .confirm-card {
+    width: min(20vw, 100px) !important;
+    margin: 0 auto 4px !important;
+  }
+  #confirmScreen .confirm-card .photo {
+    height: clamp(76px, 23vh, 118px) !important;
+    max-height: 118px !important;
+    aspect-ratio: auto !important;
+  }
+  #confirmScreen h2 { font-size: clamp(15px, 3vh, 20px) !important; margin-bottom: 3px !important; }
+  #confirmScreen .subtitle { font-size: clamp(10px, 2vh, 13px) !important; margin-bottom: 4px !important; }
+  #confirmScreen .actions .btn { min-height: 32px !important; padding: 5px 8px !important; font-size: 12px !important; }
+}
+
+
+
+/* Page 1 redesign based on the supplied reference image. */
+#scanScreen.active {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  background:#1e3335;
+  color:#263238;
+  padding:clamp(12px,2.7vw,42px) clamp(12px,5.2vw,82px) 0;
+  overflow:hidden;
+}
+#scanScreen .scan-hero {
+  position:relative;
+  z-index:5;
+  flex:0 0 auto;
+  width:100%;
+  text-align:center;
+  background:#f8fafc;
+  border-radius:clamp(14px,1.6vw,26px);
+  padding:clamp(12px,1.25vw,24px) 12px clamp(12px,1.15vw,22px);
+  margin:0 0 clamp(12px,2vh,28px);
+}
+#scanScreen .scan-hero h1 {
+  color:#263238;
+  font-size:clamp(22px,2.7vw,42px);
+  font-weight:500;
+  line-height:1.12;
+  margin:0 0 clamp(5px,.65vw,10px);
+}
+#scanScreen .scan-hero p {
+  color:#514c49;
+  font-size:clamp(15px,1.95vw,30px);
+  line-height:1.2;
+  margin:0 0 clamp(9px,1.2vw,18px);
+}
+#scanScreen .scan-total {
+  color:#079bd5;
+  font-size:clamp(17px,1.95vw,30px);
+  line-height:1.1;
+}
+#scanScreen>.center {display:none!important}
+#scanScreen .scan-layout {
+  position:relative;
+  flex:1 1 auto;
+  min-height:0;
+  width:100%;
+  margin:0;
+  overflow:hidden;
+}
+#scanScreen .camera-box {
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;min-height:0;
+  border-radius:0!important;
+  background:#1e3335;
+  overflow:hidden;
+}
+#scanScreen .camera-box:after {
+  content:"";
+  position:absolute;
+  z-index:2;
+  left:50%;top:50%;
+  width:clamp(150px,23vw,360px);
+  height:clamp(150px,36vh,360px);
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  background:
+    linear-gradient(#00a64f,#00a64f) left top/25% 6px no-repeat,
+    linear-gradient(#00a64f,#00a64f) left top/6px 25% no-repeat,
+    linear-gradient(#00a64f,#00a64f) right top/25% 6px no-repeat,
+    linear-gradient(#00a64f,#00a64f) right top/6px 25% no-repeat,
+    linear-gradient(#00a64f,#00a64f) left bottom/25% 6px no-repeat,
+    linear-gradient(#00a64f,#00a64f) left bottom/6px 25% no-repeat,
+    linear-gradient(#00a64f,#00a64f) right bottom/25% 6px no-repeat,
+    linear-gradient(#00a64f,#00a64f) right bottom/6px 25% no-repeat;
+}
+#scanScreen .camera-box video {object-fit:cover}
+#scanScreen .camera-placeholder {display:none!important}
+#scanScreen .scan-controls {
+  position:absolute;
+  z-index:6;
+  left:50%;bottom:clamp(8px,1.6vh,20px);
+  transform:translateX(-50%);
+  width:auto;min-width:0;max-width:92%;
+  padding:0;background:transparent;backdrop-filter:none;box-shadow:none;
+  display:flex;align-items:center;justify-content:center;
+}
+#scanScreen .scan-controls #cameraBtn {
+  min-width:150px;min-height:42px;
+  padding:8px 16px;font-size:15px;border-radius:10px;
+  box-shadow:0 3px 12px rgba(0,0,0,.25);
+}
+#scanScreen .scan-controls #cameraStatus,
+#scanScreen .scan-controls label,
+#scanScreen .scan-controls #codeInput,
+#scanScreen .scan-controls #enterBtn,
+#scanScreen .scan-controls .small {display:none!important}
+@media (max-width:700px) {
+  #scanScreen.active {padding:12px 12px 0}
+  #scanScreen .scan-hero {border-radius:16px;padding:14px 10px 13px;margin-bottom:10px}
+  #scanScreen .scan-hero h1 {font-size:clamp(20px,5.2vw,30px)}
+  #scanScreen .scan-hero p {font-size:clamp(13px,3.7vw,20px);margin-bottom:10px}
+  #scanScreen .scan-total {font-size:clamp(16px,4vw,23px)}
+  #scanScreen .camera-box:after {width:clamp(145px,36vw,230px);height:clamp(145px,36vw,230px)}
+}
+@media (orientation:landscape) and (max-height:520px) {
+  #scanScreen.active {padding:clamp(8px,2vh,18px) clamp(12px,5.2vw,82px) 0}
+  #scanScreen .scan-hero {padding:clamp(8px,1.4vh,15px) 10px;margin-bottom:clamp(7px,1.5vh,14px)}
+  #scanScreen .scan-hero h1 {font-size:clamp(19px,4.2vh,32px);margin-bottom:4px}
+  #scanScreen .scan-hero p {font-size:clamp(13px,3vh,22px);margin-bottom:5px}
+  #scanScreen .scan-total {font-size:clamp(15px,3vh,23px)}
+  #scanScreen .camera-box:after {width:clamp(145px,23vh,230px);height:clamp(145px,40vh,230px)}
+  #scanScreen .scan-controls {bottom:5px}
+  #scanScreen .scan-controls #cameraBtn {min-height:32px;font-size:12px;padding:5px 12px}
+}
+
+
+
+/* Camera preview remains full-screen; scanner instructions overlay the preview. */
+#scanScreen, #scannerScreen, .scan-screen, .scanner-screen {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+#scanScreen video, #scannerScreen video,
+.scan-screen video, .scanner-screen video,
+#scanScreen canvas, #scannerScreen canvas,
+.scan-screen canvas, .scanner-screen canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+#scanScreen .scanner-header, #scannerScreen .scanner-header,
+.scan-screen .scanner-header, .scanner-screen .scanner-header,
+#scanScreen .scan-header, #scannerScreen .scan-header,
+.scan-screen .scan-header, .scanner-screen .scan-header {
+  position: absolute;
+  z-index: 5;
+  top: clamp(10px, 4vh, 42px);
+  left: 5%;
+  right: 5%;
+  width: auto;
+}
+#scanScreen .scan-frame, #scannerScreen .scan-frame,
+.scan-screen .scan-frame, .scanner-screen .scan-frame,
+#scanScreen .scanner-frame, #scannerScreen .scanner-frame,
+.scan-screen .scanner-frame, .scanner-screen .scanner-frame {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+
+/* Make the scan instructions a floating popup OVER the full-screen camera. */
+#scanScreen.active {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+#scanScreen .scan-layout {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  z-index: 1 !important;
+}
+#scanScreen .camera-box {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  border-radius: 0 !important;
+}
+#scanScreen #video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+#scanScreen .scan-hero {
+  position: absolute !important;
+  z-index: 10 !important;
+  top: clamp(12px, 4.2vh, 42px) !important;
+  left: clamp(12px, 5.2vw, 80px) !important;
+  right: clamp(12px, 5.2vw, 80px) !important;
+  width: auto !important;
+  margin: 0 auto !important;
+  padding: clamp(12px, 2vh, 24px) clamp(14px, 2.5vw, 34px) !important;
+  border-radius: clamp(14px, 2vw, 24px) !important;
+  background: rgba(250, 251, 252, 0.97) !important;
+  color: #263238 !important;
+  text-align: center !important;
+  box-shadow: 0 8px 28px rgba(0,0,0,.18) !important;
+  box-sizing: border-box !important;
+}
+#scanScreen .scan-hero h1 {
+  margin: 0 0 clamp(4px, .8vh, 10px) !important;
+  font-size: clamp(20px, 3vw, 42px) !important;
+  line-height: 1.12 !important;
+}
+#scanScreen .scan-hero p {
+  margin: 0 0 clamp(6px, 1.2vh, 14px) !important;
+  font-size: clamp(14px, 2vw, 28px) !important;
+  line-height: 1.2 !important;
+}
+#scanScreen .scan-total {
+  margin: 0 !important;
+  color: #08a3d4 !important;
+  font-size: clamp(16px, 2.2vw, 30px) !important;
+  line-height: 1.15 !important;
+}
+#scanScreen > .center {
+  display: none !important;
+}
+#scanScreen .scan-controls {
+  z-index: 12 !important;
+}
+@media (max-height: 500px) {
+  #scanScreen .scan-hero {
+    top: 8px !important;
+    left: 5% !important;
+    right: 5% !important;
+    padding: 8px 12px !important;
+  }
+  #scanScreen .scan-hero h1 { font-size: clamp(16px, 3.5vh, 24px) !important; }
+  #scanScreen .scan-hero p { font-size: clamp(11px, 2.4vh, 16px) !important; margin-bottom: 4px !important; }
+  #scanScreen .scan-total { font-size: clamp(12px, 2.6vh, 18px) !important; }
 }
 
 </style>
@@ -160,6 +916,11 @@ body:has(#confirmScreen.active) .topbar{display:none!important}
 </header>
 <main>
 <section class="screen active" id="scanScreen">
+  <div class="scan-hero" aria-live="polite">
+    <h1>Arahkan Kamera ke QR Code</h1>
+    <p>Pastikan QR code terlihat jelas dan dalam frame</p>
+    <div class="scan-total">Total pemilihan: <span id="scanTotal">0</span></div>
+  </div>
   <div class="center">
     <h1>Scan Kode untuk Memulai</h1>
     <p class="subtitle">Simulasi Pemilihan Kepala Desa Jatisari</p>
