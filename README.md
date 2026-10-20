@@ -2,12 +2,12 @@ Desa Jatisari Selasa, 13/10/2026, dalam rangka Pemilihan Kepala Desa Serentak Di
 1. Aplikasi berbasis WEB, bukan android maupun ios.
 2. Memudahkan untuk sosialisasi/mengenalkan kepada masyarakat setempat yang sedang melaksanakan pilkades.
 3. Perlu di ingat ini hanya simulasi bukan pemungutan suara resmi, jadi tidak ada data yang di simpan maupun di rekam.
-4. Surat undangan untuk pemindaan/memindai bisa meminta sample ke Perankat Desa/Admin atau melalui instagram chat/dm ke sini: @premzdhytz
+4. Surat undangan untuk pemindaan/memindai bisa meminta sample ke Perangkat Desa/Admin atau melalui instagram chat/dm ke sini: @premzdhytz
 5. Jika ada kesalahan atau tata letak yang kurang baik di beberapa perangkat harap laporkan melalui DM IG @premzdhytz
 
 Cara mengsimulasikannya sebagai berikut:
 1. Siapkan sample surat undangan
-2. Siapkan web simulasi ini
+2. Siapkan web simulasi ini => https://premzdhytz.github.io/simulasi-pemilihan-jatisari/
 3. Scan Barcode Undangan
 4. Pilih salah satu gambar Kandidat
 5. Klik Pilih Kandidat Ini
