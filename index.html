@@ -954,13 +954,15 @@ body:has(#confirmScreen.active) .topbar{display:none!important}
   <p class="small center" style="margin-top:12px">Pilih salah satu kandidat untuk melanjutkan simulasi.</p>
 </section>
 
-<section class="screen" id="confirmScreen">
-  <h2>Konfirmasi Pemilihan</h2>
-  <p class="subtitle">Apa Anda yakin akan memilih kandidat ini?</p>
-  <div class="confirm-card" id="confirmCard"></div>
-  <div class="actions">
-    <button class="btn btn-red" id="repeatBtn">Ulangi</button>
-    <button class="btn btn-blue" id="confirmBtn">Pilih</button>
+<section class="screen" id="confirmScreen" aria-modal="true" role="dialog" aria-label="Konfirmasi pemilihan">
+  <div class="confirm-modal">
+    <h2>Konfirmasi Pemilihan</h2>
+    <p class="subtitle">Apa Anda yakin akan memilih kandidat ini?</p>
+    <div class="confirm-card" id="confirmCard"></div>
+    <div class="actions">
+      <button class="btn btn-red" id="repeatBtn">Ulangi</button>
+      <button class="btn btn-blue" id="confirmBtn">Pilih</button>
+    </div>
   </div>
 </section>
 
@@ -997,7 +999,16 @@ const ASSETS = {
 const candidates = ASSETS.candidates;
 let selected = null, stream = null, detector = null, scanLoop = false, scanBusy = false;
 const $ = id => document.getElementById(id);
-function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));}
+function showScreen(id){
+  const isPopup = id === "confirmScreen" || id === "successScreen";
+  document.querySelectorAll(".screen").forEach(s=>{
+    if (isPopup) {
+      s.classList.toggle("active", s.id === "voteScreen" || s.id === id);
+    } else {
+      s.classList.toggle("active", s.id === id);
+    }
+  });
+}
 function setImageAssets(){
   ["smallCrest", "largeCrest"].forEach(id => {
     const img = $(id);
@@ -1151,5 +1162,106 @@ setImageAssets();
 renderCandidates();
 window.addEventListener("load",()=>setTimeout(()=>startCamera(),150));
 </script>
+
+<style>
+/* Konfirmasi dan terima kasih adalah popup di atas halaman kandidat (halaman 2). */
+#confirmScreen.active {
+  position: fixed !important; inset: 0 !important; z-index: 999 !important;
+  width: 100vw !important; height: 100dvh !important; min-height: 0 !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  padding: 18px !important; overflow: auto !important;
+  background: rgba(7,18,34,.68) !important; backdrop-filter: blur(4px);
+}
+#confirmScreen .confirm-modal {
+  /* Popup besar, hampir memenuhi layar; susunan elemen tetap seperti halaman konfirmasi semula. */
+  box-sizing: border-box; width: min(94vw, 1500px); height: min(94dvh, 1000px);
+  max-height: 94dvh; overflow: auto; display: flex; flex-direction: column;
+  justify-content: center; padding: clamp(18px, 3vw, 30px);
+  border-radius: 20px; background: #fff;
+  box-shadow: 0 20px 70px rgba(0,0,0,.35); border: 1px solid #dce4eb;
+}
+#confirmScreen h2, #confirmScreen .subtitle { text-align: center !important; }
+#confirmScreen .confirm-card { width: min(220px, 42vw) !important; margin: 10px auto 16px !important; }
+#confirmScreen .confirm-card .photo { aspect-ratio: 4 / 5 !important; height: auto !important; max-height: 38vh !important; }
+#confirmScreen .actions { width: 100% !important; gap: 12px !important; }
+#confirmScreen .actions .btn { width: 50% !important; min-width: 0 !important; }
+#successScreen.active { z-index: 1000 !important; }
+@media(max-width:700px) {
+ #confirmScreen.active { padding: 10px !important; }
+ #confirmScreen .confirm-modal { box-sizing: border-box; width: 96vw; height: 96dvh; max-height: 96dvh; padding: 16px 12px; border-radius: 16px; }
+ #confirmScreen .confirm-card { width: min(48vw, 190px) !important; margin: 8px auto 12px !important; }
+ #confirmScreen h2 { font-size: clamp(21px, 6vw, 30px); }
+ #confirmScreen .subtitle { font-size: clamp(13px, 3.8vw, 18px); margin-bottom: 8px; }
+}
+@media (max-height: 520px) {
+  #confirmScreen .confirm-modal { height: 94dvh; max-height: 94dvh; padding: 10px 14px; }
+}
+
+
+/* Revisi akhir popup konfirmasi: sedikit lebih kecil, teks rata kiri, jarak lega. */
+#confirmScreen.active {
+  padding: 16px !important;
+}
+#confirmScreen .confirm-modal {
+  width: min(90vw, 1200px) !important;
+  height: min(72dvh, 720px) !important;
+  max-height: 72dvh !important;
+  padding: clamp(22px, 3vw, 36px) !important;
+  justify-content: center !important;
+  gap: 30px !important;
+  overflow-y: auto !important;
+}
+#confirmScreen h2,
+#confirmScreen .subtitle {
+  text-align: left !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+#confirmScreen h2 { margin-top: 0 !important; margin-bottom: 0 !important; }
+#confirmScreen .subtitle { margin-top: 0 !important; margin-bottom: 0 !important; }
+#confirmScreen .confirm-card {
+  width: min(220px, 34vw) !important;
+  max-width: 220px !important;
+  margin: 0 auto !important;
+  flex: 0 0 auto !important;
+}
+#confirmScreen .confirm-card .photo {
+  max-height: 34vh !important;
+}
+#confirmScreen .actions {
+  margin: 0 auto !important;
+  gap: 16px !important;
+  flex: 0 0 auto !important;
+}
+@media (max-width: 700px) {
+  #confirmScreen.active { padding: 10px !important; }
+  #confirmScreen .confirm-modal {
+    width: 94vw !important;
+    height: 74dvh !important;
+    max-height: 74dvh !important;
+    padding: 20px 16px !important;
+    gap: 30px !important;
+    justify-content: flex-start !important;
+  }
+  #confirmScreen .confirm-card {
+    width: min(48vw, 190px) !important;
+    max-width: 190px !important;
+  }
+  #confirmScreen .confirm-card .photo { max-height: 32vh !important; }
+  #confirmScreen .actions { margin-top: 0 !important; gap: 12px !important; }
+}
+@media (max-height: 520px) {
+  #confirmScreen .confirm-modal {
+    height: 76dvh !important;
+    max-height: 76dvh !important;
+    gap: 30px !important;
+    padding: 14px 20px !important;
+  }
+  #confirmScreen .confirm-card { width: min(180px, 28vw) !important; }
+  #confirmScreen .confirm-card .photo { max-height: 28vh !important; }
+}
+
+</style>
 </body>
 </html>
